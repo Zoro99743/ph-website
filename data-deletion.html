@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion | Playhouse Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .policy-hero {
+            text-align: center;
+            padding: 150px 5% 80px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .policy-hero h1 {
+            font-size: 3.5rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+        .policy-hero h1 span {
+            color: var(--primary);
+        }
+        
+        .policy-content-wrapper {
+            padding: 0 5% 100px;
+            background: var(--bg-dark);
+        }
+
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 50px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 2px solid var(--primary);
+            position: relative;
+            z-index: 2;
+            transform: translateY(-40px);
+        }
+
+        .policy-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 15px;
+        }
+
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .policy-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a3629;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .policy-content ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .policy-content li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a3629;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .deletion-form {
+            background: var(--bg-surface);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+
+        .deletion-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .deletion-form input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            color: black;
+            font-family: inherit;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .deletion-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .deletion-form button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .deletion-form button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .policy-hero h1 {
+                font-size: 2.5rem;
+            }
+            .policy-hero {
+                padding: 120px 5% 50px;
+            }
+            .policy-content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Playhouse Cafe" style="height: 60px; object-fit: contain; max-width: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+            <span style="display:none; align-items:center; gap:8px; font-weight:800; font-size:1.6rem; color:var(--text-main);"><i class="fa-solid fa-dice-d20" style="color:var(--primary);"></i> Playhouse<span style="color:var(--primary);">Cafe</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#library">Games</a>
+            <a href="checkout.html">Book a Table</a>
+            <a href="chat.html">Live Chat</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-actions" style="gap: 15px;">
+            <a href="checkout.html" class="btn-primary" style="padding: 10px 15px;" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="javascript:void(0)" class="btn-outline" style="padding: 10px 15px; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;" title="Profile" onclick="toggleProfile()"><i class="fa-solid fa-user"></i></a>
+            <i class="fa-solid fa-bars menu-btn" style="display: none; font-size: 1.6rem; cursor: pointer; color: var(--text-main); align-self: center;" onclick="document.querySelector('.nav-links').classList.toggle('active')"></i>
+        </div>
+    </nav>
+
+    <!-- Profile Sidebar Overlay -->
+    <div class="modal-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleProfile()"><i class="fa-solid fa-xmark"></i></button>
+        <h2 style="margin-bottom: 30px; font-size: 1.8rem; color: var(--text-main);">Customer Profile</h2>
+        
+        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;">Log in to view your bookings, manage saved tables, and track your loyalty points.</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="btn-outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 15px; background: white; color: black; border: none; font-weight: 600; cursor: pointer;" onclick="window.location.href='login.html'">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;"> Login with Google
+            </button>
+            
+            <button class="btn-outline" style="width: 100%; padding: 15px; background: transparent; border: 1px solid #ff4757; color: #ff4757; margin-top: 20px;" onclick="alert('Logged out successfully!'); toggleProfile();">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 1: Hero -->
+    <section class="policy-hero fade-up" style="background: var(--bg-dark); padding-bottom: 80px; border: none;">
+        <h1 style="font-size: 4rem;">Data <span>Deletion</span></h1>
+        <p style="color: var(--text-main); font-size: 1.3rem; max-width: 700px; margin: 0 auto; font-weight: 300;">Request removal of your personal data.</p>
+    </section>
+
+    <!-- Policy Content -->
+    <div class="policy-content-wrapper">
+        <div class="policy-content fade-up">
+            <h2>1. Your Right to Erasure</h2>
+            <p>Under applicable privacy laws, you have the right to request the deletion of your personal data that we have collected and maintained about you ("Right to be Forgotten"). We are committed to complying with such requests, subject to certain exceptions outlined by law (such as retaining information necessary for security, fraud prevention, or fulfilling legal obligations).</p>
+
+            <h2>2. What Information Can Be Deleted?</h2>
+            <p>Upon your verified request, we will delete data such as:</p>
+            <ul>
+                <li>Your profile and account information</li>
+                <li>Your past booking and reservation history (after any necessary statutory retention period)</li>
+                <li>Your marketing preferences and email newsletter subscription</li>
+            </ul>
+
+            <h2>3. How to Request Data Deletion</h2>
+            <p>To request the deletion of your personal data, please fill out the form below. Once submitted, we will process your request within 30 days. We may need to contact you to verify your identity before completing the deletion.</p>
+
+            <div class="deletion-form">
+                <form id="dataDeletionForm" onsubmit="event.preventDefault(); alert('Your data deletion request has been submitted successfully. We will process it within 30 days.'); this.reset();">
+                    <label for="email">Email Address associated with your account</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    
+                    <label for="reason">Reason for deletion (Optional)</label>
+                    <input type="text" id="reason" name="reason" placeholder="Why are you requesting data deletion?">
+                    
+                    <button type="submit">Submit Deletion Request</button>
+                </form>
+            </div>
+
+            <h2>4. Contact for Privacy Inquiries</h2>
+            <p>If you have any questions regarding your data, privacy, or this deletion process, please contact our Data Protection Officer at theplayhousecbe@gmail.com.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-dice-d20" style="color: var(--primary);"></i> The Playhouse</h4>
+                <p>Your premier destination for board game experiences. Gather friends, discover new games, and create unforgettable memories.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="index.html#library">Games Library</a>
+                <a href="checkout.html">Book a Table</a>
+                <a href="chat.html">Live Chat</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <p><i class="fa-solid fa-location-dot"></i> First Floor, Standard Towers, 288 A, Periyar Nagar, Coimbatore, Tamil Nadu 641004</p>
+                <p><i class="fa-solid fa-phone"></i> 063790 78075</p>
+                <p><i class="fa-solid fa-envelope"></i> theplayhousecbe@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/theplayhousecbe" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 The Playhouse. All rights reserved.</div>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="data-deletion.html">Data Deletion</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none;"></canvas>
+
+    <!-- Animations: Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        function toggleProfile() {
+            const sidebar = document.getElementById('profileSidebar');
+            const overlay = document.getElementById('profileOverlay');
+            if (sidebar) sidebar.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+        }
+    </script>
+    <script src="js/chat-widget.js"></script>
+</body>
+</html>

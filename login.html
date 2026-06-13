@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Playhouse Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+            padding: 20px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 2px solid var(--primary);
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+
+        .login-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 2rem;
+            color: var(--text-main);
+            text-decoration: none;
+            margin-bottom: 30px;
+            transform: translateZ(30px);
+        }
+
+        .login-header {
+            margin-bottom: 30px;
+            transform: translateZ(20px);
+        }
+
+        .login-header h2 {
+            color: var(--text-main);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #6a5345;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+            transform: translateZ(20px);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            background: #fdf8f5;
+            border: 1px solid #e2d5c8;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(233, 182, 94, 0.2);
+            background: #ffffff;
+        }
+
+        .password-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-container .form-control {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            color: #bda79b;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+            z-index: 10;
+        }
+
+        .toggle-password:hover {
+            color: var(--text-main);
+        }
+
+        .form-control.error {
+            border-color: #ff4757;
+            background: #fff0f1;
+        }
+
+        .forgot-link {
+            display: block;
+            text-align: right;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 8px;
+            margin-bottom: 25px;
+            transition: color 0.3s;
+            transform: translateZ(20px);
+        }
+
+        .forgot-link:hover {
+            color: var(--text-main);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(233, 182, 94, 0.3);
+            transform: translateZ(30px);
+        }
+
+        .btn-login:hover {
+            transform: translateZ(30px) translateY(-2px);
+            box-shadow: 0 8px 20px rgba(233, 182, 94, 0.5);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: #bda79b;
+            font-size: 0.85rem;
+            transform: translateZ(10px);
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2d5c8;
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: .25em;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: .25em;
+        }
+
+        .btn-google {
+            width: 100%;
+            padding: 14px;
+            background: #ffffff;
+            color: #333;
+            border: 1px solid #e2d5c8;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            transform: translateZ(20px);
+        }
+
+        .btn-google:hover {
+            background: #fdf8f5;
+            border-color: #DB4437;
+        }
+
+        .signup-text {
+            margin-top: 30px;
+            color: #6a5345;
+            font-size: 0.9rem;
+            transform: translateZ(10px);
+        }
+
+        .signup-text a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper" data-tilt data-tilt-glare data-tilt-max-glare="0.3" data-tilt-perspective="1000" data-tilt-scale="1.02">
+        <div class="login-card">
+            
+            <a href="index.html" class="login-logo">
+                <i class="fa-solid fa-dice-d20" style="color:var(--primary);"></i> 
+                Playhouse<span style="color:var(--primary);">Cafe</span>
+            </a>
+
+            <div class="login-header">
+                <h2 id="formTitle">Welcome Back</h2>
+                <p>Login to book tables and save favorite games</p>
+            </div>
+
+            <div id="authMessage" style="color: #ff4757; font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; display: none; transform: translateZ(20px);"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="hello@playhouse.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword" title="Show Password"></i>
+                    </div>
+                </div>
+
+                <a href="#" class="forgot-link">Forgot Password?</a>
+
+                <button type="submit" id="submitBtn" class="btn-login">Login Securely</button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <button id="googleBtn" class="btn-google">
+                <i class="fa-brands fa-google" style="color: #DB4437; font-size: 1.2rem;"></i> Continue with Google
+            </button>
+
+            <div class="signup-text">
+                <span id="toggleText">Don't have an account?</span> <a href="javascript:void(0)" id="toggleModeBtn">Sign up here</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script>
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3
+        });
+
+        // --- SUPABASE CONFIGURATION ---
+        const SUPABASE_URL = 'https://viaolznkqykdhcucvwpx.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpYW9sem5rcXlrZGhjdWN2d3B4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1ODMyMzcsImV4cCI6MjA5NjE1OTIzN30.AyVSPjGzoj3xyte7Xr63s4nvIlmWeXKZzR1wq_AD3NY';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Automatically redirect if user has an active session (including Google OAuth return)
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (session) window.location.href = 'index.html';
+        });
+
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (session) window.location.href = 'index.html';
+        });
+
+        // Check for errors returned from Google/Supabase in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlError = urlParams.get('error_description');
+        
+        // --- AUTH LOGIC ---
+        let isSignUpMode = false;
+        
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const submitBtn = document.getElementById('submitBtn');
+        const formTitle = document.getElementById('formTitle');
+        const toggleModeBtn = document.getElementById('toggleModeBtn');
+        const toggleText = document.getElementById('toggleText');
+        const authMessage = document.getElementById('authMessage');
+        const googleBtn = document.getElementById('googleBtn');
+
+        // Display URL error if present
+        if (urlError) {
+            setTimeout(() => {
+                showMessage("Google Login Failed: " + urlError.replace(/\+/g, ' '), true);
+            }, 500);
+        }
+        const togglePassword = document.getElementById('togglePassword');
+        const forgotLink = document.querySelector('.forgot-link');
+        const formSubtitle = document.querySelector('.login-header p');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+            this.classList.toggle('fa-eye');
+            this.title = type === 'password' ? 'Show Password' : 'Hide Password';
+        });
+
+        emailInput.addEventListener('input', () => emailInput.classList.remove('error'));
+        passwordInput.addEventListener('input', () => passwordInput.classList.remove('error'));
+
+        function showMessage(msg, isError = true) {
+            authMessage.style.display = 'block';
+            authMessage.style.color = isError ? '#ff4757' : '#2ed573';
+            authMessage.innerText = msg;
+            
+            if (isError) {
+                emailInput.classList.add('error');
+                passwordInput.classList.add('error');
+            } else {
+                emailInput.classList.remove('error');
+                passwordInput.classList.remove('error');
+            }
+        }
+
+        // Toggle between Login and Sign Up modes
+        toggleModeBtn.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            authMessage.style.display = 'none';
+            emailInput.classList.remove('error');
+            passwordInput.classList.remove('error');
+            
+            if (isSignUpMode) {
+                formTitle.innerText = "Create Account";
+                formSubtitle.innerText = "Sign up to book tables and save favorite games";
+                submitBtn.innerText = "Sign Up Securely";
+                toggleText.innerText = "Already have an account?";
+                toggleModeBtn.innerText = "Login here";
+                forgotLink.style.display = 'none';
+            } else {
+                formTitle.innerText = "Welcome Back";
+                formSubtitle.innerText = "Login to book tables and save favorite games";
+                submitBtn.innerText = "Login Securely";
+                toggleText.innerText = "Don't have an account?";
+                toggleModeBtn.innerText = "Sign up here";
+                forgotLink.style.display = 'block';
+            }
+        });
+
+        // Handle Email/Password Form Submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Processing...";
+            authMessage.style.display = 'none';
+
+            try {
+                if (isSignUpMode) {
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email: email,
+                        password: password,
+                    });
+                    if (error) throw error;
+                    showMessage("Signup successful! Please check your email to verify your account.", false);
+                } else {
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password,
+                    });
+                    if (error) throw error;
+                    // Successful login
+                    window.location.href = 'index.html'; // Redirect to home or checkout
+                }
+            } catch (error) {
+                showMessage(error.message || "An error occurred during authentication.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = isSignUpMode ? "Sign Up Securely" : "Login Securely";
+            }
+        });
+
+        // Handle Google OAuth Login
+        googleBtn.addEventListener('click', async () => {
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/login.html' // Redirect here first to save the session, then auto-redirect to index!
+                    }
+                });
+                if (error) throw error;
+            } catch (error) {
+                showMessage(error.message || "Could not connect to Google.", true);
+            }
+        });
+    </script>
+    <script src="js/chat-widget.js"></script>
+</body>
+</html>

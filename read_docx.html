@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Read Docx</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+    <input type="file" id="upload" />
+    <div id="output"></div>
+    <script>
+        document.getElementById('upload').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function(loadEvent) {
+                var arrayBuffer = loadEvent.target.result;
+                mammoth.extractRawText({arrayBuffer: arrayBuffer})
+                    .then(function(result) {
+                        document.getElementById('output').innerText = result.value;
+                    })
+                    .catch(function(err) {
+                        console.log(err.message);
+                    });
+            };
+            reader.readAsArrayBuffer(event.target.files[0]);
+        });
+    </script>
+</body>
+</html>
