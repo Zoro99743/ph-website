@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Playhouse Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .about-hero {
+            text-align: center;
+            padding: 150px 5% 80px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .about-hero h1 {
+            font-size: 3.5rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+        .about-hero h1 span {
+            color: var(--primary);
+        }
+        
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .story-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 2px solid var(--primary);
+        }
+        
+        .story-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+        }
+        
+        .story-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .value-card {
+            background: var(--bg-surface);
+            padding: 40px 30px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .value-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-hero {
+                padding: 120px 5% 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation (Identical to index.html) -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Playhouse Cafe" style="height: 60px; object-fit: contain; max-width: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+            <span style="display:none; align-items:center; gap:8px; font-weight:800; font-size:1.6rem; color:var(--text-main);"><i class="fa-solid fa-dice-d20" style="color:var(--primary);"></i> Playhouse<span style="color:var(--primary);">Cafe</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#library">Games</a>
+            <a href="checkout.html">Book a Table</a>
+            <a href="chat.html">Live Chat</a>
+            <a href="about.html" style="color: var(--primary); font-weight: 700;">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-actions" style="gap: 15px;">
+            <a href="checkout.html" class="btn-primary" style="padding: 10px 15px;" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="javascript:void(0)" class="btn-outline" style="padding: 10px 15px; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;" title="Profile" onclick="toggleProfile()"><i class="fa-solid fa-user"></i></a>
+            <i class="fa-solid fa-bars menu-btn" style="display: none; font-size: 1.6rem; cursor: pointer; color: var(--text-main); align-self: center;" onclick="document.querySelector('.nav-links').classList.toggle('active')"></i>
+        </div>
+    </nav>
+
+    <!-- Profile Sidebar Overlay -->
+    <div class="modal-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleProfile()"><i class="fa-solid fa-xmark"></i></button>
+        <h2 style="margin-bottom: 30px; font-size: 1.8rem; color: var(--text-main);">Customer Profile</h2>
+        
+        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;">Log in to view your bookings, manage saved tables, and track your loyalty points.</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="btn-outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 15px; background: white; color: black; border: none; font-weight: 600; cursor: pointer;" onclick="window.location.href='login.html'">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;"> Login with Google
+            </button>
+            
+            <button class="btn-outline" style="width: 100%; padding: 15px; background: transparent; border: 1px solid #ff4757; color: #ff4757; margin-top: 20px;" onclick="alert('Logged out successfully!'); toggleProfile();">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 1: Hero & Story Mixed -->
+    <section class="about-hero fade-up" style="background: var(--bg-dark); padding-bottom: 40px; border: none;">
+        <h1 style="font-size: 4rem;">Welcome to <span>Playhouse</span></h1>
+        <p style="color: var(--text-main); font-size: 1.3rem; max-width: 700px; margin: 0 auto; font-weight: 300;">More than just a cafe. We are a community hub dedicated to bringing people together over great food and unforgettable games.</p>
+    </section>
+
+    <!-- Mixed Color Story Card -->
+    <section class="section-container fade-up" style="padding-top: 0; padding-bottom: 60px;">
+        <div class="story-grid" data-tilt data-tilt-glare data-tilt-max-glare="0.1" style="background: #ffffff; border-radius: 24px; padding: 50px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 2px solid var(--primary);">
+            <div class="story-content">
+                <h2 style="color: var(--primary); font-size: 2.8rem; margin-bottom: 10px;">Our Story</h2>
+                <h3 style="color: var(--text-main); font-size: 1.4rem; margin-bottom: 20px; font-weight: 700;">Born from a love of cardboard and coffee.</h3>
+                <p style="color: #4a3629; font-weight: 500;">Playhouse Cafe started with a simple idea: in a world increasingly dominated by screens, people are craving genuine, face-to-face connections. We realized there was no better catalyst for conversation and laughter than a fantastic board game.</p>
+                <p style="color: #4a3629; font-weight: 500;">We've curated a library of hundreds of games. Whether you're a seasoned tabletop veteran or looking for a fun date night activity, our Game Masters are always on hand to recommend and teach you the perfect game.</p>
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1611891487122-207579d67d98?auto=format&fit=crop&w=800&q=80" alt="People playing board games" class="story-image" style="box-shadow: 10px 10px 0px var(--primary);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Values with Mixed Accents -->
+    <section class="section-container fade-up" style="padding-top: 40px; padding-bottom: 100px;">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h2 style="font-size: 2.5rem; color: var(--text-main);">What We <span style="color: var(--primary);">Stand For</span></h2>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2" style="background: #ffffff; border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <i class="fa-solid fa-users"></i>
+                <h3 style="color: var(--text-main); margin-bottom: 15px; font-weight: 800;">Community First</h3>
+                <p style="color: #4a3629; font-size: 0.95rem; font-weight: 500;">We provide a safe, inclusive space where strangers become friends and friends become family over the roll of a dice.</p>
+            </div>
+            <div class="value-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2" style="background: #ffffff; border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <i class="fa-solid fa-mug-hot"></i>
+                <h3 style="color: var(--text-main); margin-bottom: 15px; font-weight: 800;">Premium Quality</h3>
+                <p style="color: #4a3629; font-size: 0.95rem; font-weight: 500;">From our artisan coffee to our loaded fries and carefully maintained game library, we never compromise on quality.</p>
+            </div>
+            <div class="value-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2" style="background: #ffffff; border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <i class="fa-solid fa-gamepad"></i>
+                <h3 style="color: var(--text-main); margin-bottom: 15px; font-weight: 800;">Unplug & Play</h3>
+                <p style="color: #4a3629; font-size: 0.95rem; font-weight: 500;">Put down the phone and pick up some cards. We encourage digital detoxing for real-world fun.</p>
+            </div>
+        </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-dice-d20" style="color: var(--primary);"></i> The Playhouse</h4>
+                <p>Your premier destination for board game experiences. Gather friends, discover new games, and create unforgettable memories.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="index.html#library">Games Library</a>
+                <a href="checkout.html">Book a Table</a>
+                <a href="chat.html">Live Chat</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <p><i class="fa-solid fa-location-dot"></i> First Floor, Standard Towers, 288 A, Periyar Nagar, Coimbatore, Tamil Nadu 641004</p>
+                <p><i class="fa-solid fa-phone"></i> 063790 78075</p>
+                <p><i class="fa-solid fa-envelope"></i> theplayhousecbe@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/theplayhousecbe" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 The Playhouse. All rights reserved.</div>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="data-deletion.html">Data Deletion</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none;"></canvas>
+
+    <!-- Animations: Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script>
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2
+        });
+
+        function toggleProfile() {
+            const sidebar = document.getElementById('profileSidebar');
+            const overlay = document.getElementById('profileOverlay');
+            if (sidebar) sidebar.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+        }
+    </script>
+    <script src="js/chat-widget.js"></script>
+</body>
+</html>

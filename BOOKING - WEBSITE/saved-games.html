@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Games | Playhouse Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .saved-hero {
+            text-align: center;
+            padding: 150px 5% 80px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .saved-hero h1 {
+            font-size: 3rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+        .saved-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .saved-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .saved-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        .saved-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .saved-card h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        /* remove-btn css removed */
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Playhouse Cafe" style="height: 60px; object-fit: contain; max-width: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+            <span style="display:none; align-items:center; gap:8px; font-weight:800; font-size:1.6rem; color:var(--text-main);"><i class="fa-solid fa-dice-d20" style="color:var(--primary);"></i> Playhouse<span style="color:var(--primary);">Cafe</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#library">Games</a>
+            <a href="checkout.html">Book a Table</a>
+            <a href="chat.html">Live Chat</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-actions" style="gap: 15px;">
+            <a href="checkout.html" class="btn-primary" style="padding: 10px 15px;" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="javascript:void(0)" class="btn-outline" style="padding: 10px 15px; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;" title="Profile" onclick="toggleProfile()"><i class="fa-solid fa-user"></i></a>
+            <i class="fa-solid fa-bars menu-btn" style="display: none; font-size: 1.6rem; cursor: pointer; color: var(--text-main); align-self: center;" onclick="document.querySelector('.nav-links').classList.toggle('active')"></i>
+        </div>
+    </nav>
+
+    <!-- Profile Sidebar Overlay -->
+    <div class="modal-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+    <div class="profile-sidebar" id="profileSidebar">
+        <button style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleProfile()"><i class="fa-solid fa-xmark"></i></button>
+        <h2 style="margin-bottom: 30px; font-size: 1.8rem; color: var(--text-main);">Customer Profile</h2>
+        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;">Log in to view your bookings, manage saved tables, and track your loyalty points.</p>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="btn-outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 15px; background: white; color: black; border: none; font-weight: 600; cursor: pointer;" onclick="window.location.href='login.html'">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;"> Login with Google
+            </button>
+            <button class="btn-outline" style="width: 100%; padding: 15px; background: transparent; border: 1px solid #ff4757; color: #ff4757; margin-top: 20px;" onclick="alert('Logged out successfully!'); toggleProfile();">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="saved-hero">
+        <h1>Your <span style="color: var(--primary);">Saved Games</span></h1>
+        <p style="color: #bda79b; font-size: 1.1rem;">Games you've liked from the library.</p>
+    </section>
+
+    <!-- Grid -->
+    <section style="min-height: 40vh;">
+        <div class="saved-grid" id="savedGamesGrid">
+            <!-- JS populated -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-dice-d20" style="color: var(--primary);"></i> The Playhouse</h4>
+                <p>Your premier destination for board game experiences. Gather friends, discover new games, and create unforgettable memories.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="index.html#library">Games Library</a>
+                <a href="checkout.html">Book a Table</a>
+                <a href="chat.html">Live Chat</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 The Playhouse. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('savedGamesGrid');
+            const likedGames = JSON.parse(localStorage.getItem('likedGames') || '[]');
+            
+            if(likedGames.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><i class="fa-solid fa-heart-crack" style="font-size:3rem; margin-bottom:15px; display:block;"></i>No games saved yet. Go to the Home page and click the heart icon on your favorite games!</div>';
+                return;
+            }
+
+            likedGames.forEach(gameName => {
+                const card = document.createElement('div');
+                card.className = 'saved-card';
+                card.innerHTML = `
+                    <i class="fa-solid fa-dice"></i>
+                    <h3>${gameName}</h3>
+                    <button style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#ff4757'" onmouseout="this.style.color='var(--text-muted)'" onclick="removeGame('${gameName}', this)"><i class="fa-solid fa-xmark"></i></button>
+                `;
+                grid.appendChild(card);
+            });
+        });
+
+        function removeGame(name, btn) {
+            let liked = JSON.parse(localStorage.getItem('likedGames') || '[]');
+            liked = liked.filter(g => g !== name);
+            localStorage.setItem('likedGames', JSON.stringify(liked));
+            btn.parentElement.remove();
+            
+            if(liked.length === 0) {
+                document.getElementById('savedGamesGrid').innerHTML = '<div class="empty-state"><i class="fa-solid fa-heart-crack" style="font-size:3rem; margin-bottom:15px; display:block;"></i>No games saved yet. Go to the Home page and click the heart icon on your favorite games!</div>';
+            }
+        }
+    </script>
+    
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none;"></canvas>
+
+    <!-- Animations: Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/chat-widget.js"></script>
+</body>
+</html>

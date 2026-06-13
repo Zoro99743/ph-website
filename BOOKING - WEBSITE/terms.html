@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Playhouse Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .policy-hero {
+            text-align: center;
+            padding: 150px 5% 80px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-surface) 100%);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .policy-hero h1 {
+            font-size: 3.5rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+        .policy-hero h1 span {
+            color: var(--primary);
+        }
+        
+        .policy-content-wrapper {
+            padding: 0 5% 100px;
+            background: var(--bg-dark);
+        }
+
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 50px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 2px solid var(--primary);
+            position: relative;
+            z-index: 2;
+            transform: translateY(-40px);
+        }
+
+        .policy-content h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 15px;
+        }
+
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .policy-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a3629;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .policy-content ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .policy-content li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a3629;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+            .policy-hero h1 {
+                font-size: 2.5rem;
+            }
+            .policy-hero {
+                padding: 120px 5% 50px;
+            }
+            .policy-content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Playhouse Cafe" style="height: 60px; object-fit: contain; max-width: 180px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+            <span style="display:none; align-items:center; gap:8px; font-weight:800; font-size:1.6rem; color:var(--text-main);"><i class="fa-solid fa-dice-d20" style="color:var(--primary);"></i> Playhouse<span style="color:var(--primary);">Cafe</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#events">Events</a>
+            <a href="index.html#library">Games</a>
+            <a href="checkout.html">Book a Table</a>
+            <a href="chat.html">Live Chat</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-actions" style="gap: 15px;">
+            <a href="checkout.html" class="btn-primary" style="padding: 10px 15px;" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="javascript:void(0)" class="btn-outline" style="padding: 10px 15px; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;" title="Profile" onclick="toggleProfile()"><i class="fa-solid fa-user"></i></a>
+            <i class="fa-solid fa-bars menu-btn" style="display: none; font-size: 1.6rem; cursor: pointer; color: var(--text-main); align-self: center;" onclick="document.querySelector('.nav-links').classList.toggle('active')"></i>
+        </div>
+    </nav>
+
+    <!-- Profile Sidebar Overlay -->
+    <div class="modal-overlay" id="profileOverlay" onclick="toggleProfile()"></div>
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button style="position: absolute; right: 20px; top: 20px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'" onclick="toggleProfile()"><i class="fa-solid fa-xmark"></i></button>
+        <h2 style="margin-bottom: 30px; font-size: 1.8rem; color: var(--text-main);">Customer Profile</h2>
+        
+        <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;">Log in to view your bookings, manage saved tables, and track your loyalty points.</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="btn-outline" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 15px; background: white; color: black; border: none; font-weight: 600; cursor: pointer;" onclick="window.location.href='login.html'">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px; height: 20px;"> Login with Google
+            </button>
+            
+            <button class="btn-outline" style="width: 100%; padding: 15px; background: transparent; border: 1px solid #ff4757; color: #ff4757; margin-top: 20px;" onclick="alert('Logged out successfully!'); toggleProfile();">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 1: Hero -->
+    <section class="policy-hero fade-up" style="background: var(--bg-dark); padding-bottom: 80px; border: none;">
+        <h1 style="font-size: 4rem;">Terms of <span>Service</span></h1>
+        <p style="color: var(--text-main); font-size: 1.3rem; max-width: 700px; margin: 0 auto; font-weight: 300;">Last updated: June 2026</p>
+    </section>
+
+    <!-- Policy Content -->
+    <div class="policy-content-wrapper">
+        <div class="policy-content fade-up">
+            <h2>1. Agreement to Terms</h2>
+            <p>These Terms of Service constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and Playhouse Cafe ("we," "us" or "our"), concerning your access to and use of our website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the "Site").</p>
+
+            <h2>2. Table Bookings & Reservations</h2>
+            <p>When booking a table at Playhouse Cafe through our platform, you agree to the following terms:</p>
+            <ul>
+                <li>Bookings are subject to availability and are confirmed only upon receipt of a confirmation email.</li>
+                <li>Please arrive on time. We hold tables for a grace period of 15 minutes past the reservation time, after which the table may be released to other guests.</li>
+                <li>Cancellations should be made at least 24 hours in advance to allow others the opportunity to book.</li>
+            </ul>
+
+            <h2>3. Cafe Conduct</h2>
+            <p>We strive to provide a welcoming and fun environment for everyone. By visiting our premises, you agree to:</p>
+            <ul>
+                <li>Treat our game library with care. Do not bend cards, lose pieces, or handle games with greasy hands.</li>
+                <li>Be respectful to staff and other patrons. Harassment or disruptive behavior will not be tolerated.</li>
+                <li>Consume only food and beverages purchased on the premises (no outside food or drink allowed).</li>
+            </ul>
+
+            <h2>4. Intellectual Property Rights</h2>
+            <p>Unless otherwise indicated, the Site is our proprietary property and all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics on the Site (collectively, the "Content") and the trademarks, service marks, and logos contained therein are owned or controlled by us or licensed to us.</p>
+
+            <h2>5. Limitation of Liability</h2>
+            <p>In no event will we or our directors, employees, or agents be liable to you or any third party for any direct, indirect, consequential, exemplary, incidental, special, or punitive damages, including lost profit, lost revenue, loss of data, or other damages arising from your use of the Site or our services.</p>
+
+            <h2>6. Contact Us</h2>
+            <p>In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at theplayhousecbe@gmail.com.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-dice-d20" style="color: var(--primary);"></i> The Playhouse</h4>
+                <p>Your premier destination for board game experiences. Gather friends, discover new games, and create unforgettable memories.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="index.html#library">Games Library</a>
+                <a href="checkout.html">Book a Table</a>
+                <a href="chat.html">Live Chat</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <p><i class="fa-solid fa-location-dot"></i> First Floor, Standard Towers, 288 A, Periyar Nagar, Coimbatore, Tamil Nadu 641004</p>
+                <p><i class="fa-solid fa-phone"></i> 063790 78075</p>
+                <p><i class="fa-solid fa-envelope"></i> theplayhousecbe@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div class="footer-socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/theplayhousecbe" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 The Playhouse. All rights reserved.</div>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="data-deletion.html">Data Deletion</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none;"></canvas>
+
+    <!-- Animations: Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        function toggleProfile() {
+            const sidebar = document.getElementById('profileSidebar');
+            const overlay = document.getElementById('profileOverlay');
+            if (sidebar) sidebar.classList.toggle('active');
+            if (overlay) overlay.classList.toggle('active');
+        }
+    </script>
+    <script src="js/chat-widget.js"></script>
+</body>
+</html>
